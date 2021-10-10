@@ -1,12 +1,12 @@
 {
   "response": [
     {
-      "datetime":1631261230,
-      "filename": "SuperiorOS-Xcalibur-whyred-OFFICIAL-20210910-0808.zip",
-      "id": "b39955eb6408b005210009e7ab3cb48c",
+      "datetime":1633856160,
+      "filename": "SuperiorOS-Xcalibur-whyred-OFFICIAL-20211010-0857.zip",
+      "id": "2f31c811aa29a4246c554e5d570e341e",
       "romtype": "OFFICIAL",
-      "size":821120410,
-      "url": "https://master.dl.sourceforge.net/project/superioros/whyred/SuperiorOS-Xcalibur-whyred-OFFICIAL-20210910-0808.zip",
+      "size":828571404,
+      "url": "https://master.dl.sourceforge.net/project/superioros/whyred/SuperiorOS-Xcalibur-whyred-OFFICIAL-20211010-0857.zip",
       "version": "Xcalibur",
       "device_name": "Xiaomi Redmi Note 5 Pro",
       "maintainer": "Sipun Ku Mahanta"
