@@ -1,0 +1,74 @@
+name: Channel Poster
+
+on:
+  push:
+    branches: [twelve]
+  workflow_dispatch:
+jobs:
+  poster:
+    runs-on: ubuntu-latest
+    steps:
+      # Install necessary dependencies for the script to work
+      - name: Install Dep
+        run: sudo pip install pyTelegramBotAPI
+
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.GH_TOKEN }}
+          ref: twelve
+
+      - name: Github config
+        run: |
+          git config --global user.name "Darkstar085"
+          git config --global user.email "sipunkumar85@gmail.com"
+
+      # Post the update
+      - name: Bot
+        run: sudo -E python3 .github/scripts/post-gapps.py
+        env:
+          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+          CHAT: ${{ secrets.CHAT_ID }}
+
+      - name: debug
+        run: sudo ls
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: releases
+          retention-days: 2
+          path: |
+            release_notes.txt
+            urls.txt
+            tag.txt
+
+      # Commit the changes and push to git
+      - name: Commit and Push Changes
+        run: sudo bash .github/scripts/push.sh
+
+  release:
+    runs-on: ubuntu-latest
+    needs: poster
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.GH_TOKEN }}
+          ref: twelve
+
+      - name: Download artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: releases
+
+      - name: debug
+        run: sudo ls
+
+      - name: Download
+        run: sudo -E python3 .github/scripts/download.py
+
+      - name: Release to GH Releases
+        run: sudo -E bash .github/scripts/release.sh
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
